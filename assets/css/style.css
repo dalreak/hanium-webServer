@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: local('NanumSquareRoundB'),
+  url('NanumSquareRoundB.woff2') format('woff2');
+}
+.bg-custom{
+    background-color: #5B5EA6;
+}
