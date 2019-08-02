@@ -1,8 +1,38 @@
 @font-face {
-  font-family: 'NanumSquareRound';
+  font-family: 'NanumSquareRoundB';
   src: local('NanumSquareRoundB'),
-  url('NanumSquareRoundB.woff2') format('woff2');
+    url('../fonts/NanumSquareRoundB.woff2') format('woff2');
 }
-.bg-custom{
-    background-color: #5B5EA6;
+
+@font-face {
+  font-family: 'Homestead Display';
+  src: local('Homestead Display'),
+    url('../fonts/Homestead-Display.woff2') format('woff2');
+}
+
+.bg-custom {
+  background-color: #5B5EA6;
+}
+
+.bg-custom-mainJumbotron{
+  background-color: #000000;
+}
+
+.footer-middle {
+  background: #e68fac;
+  padding-top: 2em;
+  color: white;
+}
+
+.mainShowFonts {
+  font-family: 'Homestead Display';
+  font-weight: 500;
+  font-style: normal;
+  font-size: 8vw;
+
+ white-space: nowrap;
+}
+
+body {
+  font-family: 'NanumSquareRoundB'
 }
