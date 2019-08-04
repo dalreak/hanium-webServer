@@ -19,9 +19,9 @@
 }
 
 .footer-middle {
-  background: #e68fac;
+  background: #FCE4EC;
   padding-top: 2em;
-  color: white;
+  color: #495057;
 }
 
 .mainShowFonts {
@@ -32,7 +32,21 @@
 
  white-space: nowrap;
 }
+.overlayer{
+  position:absolute;
+  top:0;right:0;bottom:0;left:0;
 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  display:-webkit-flex;
+  -webkit-align-item:center;
+  -webkit-justify-content:center;
+}
+#particles-js{
+  position:relative;
+}
 body {
   font-family: 'NanumSquareRoundB'
 }
