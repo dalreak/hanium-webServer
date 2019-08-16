@@ -1,5 +1,12 @@
 #ignore file list
-cert/ #ignore cert file
-node_modules/ #ignore node module
-.env #ignore node password file
-config/ #ignore db config file
+#ignore cert file
+cert/
+
+#ignore node module
+node_modules/
+
+#ignore node password file
+.env
+
+#ignore db config file
+config/
