@@ -1,6 +1,6 @@
 # **MainNodeServer**
 
-**Node**를 사용해 **Server**를 구성 후 동작 url형태로 명령 인식 database 작업,login 처리
+**Node 모듈**을 사용해 **Server**를 구성 후 동작 url형태로 명령 인식 database 작업,login 처리,웹페이지 렌더
 
 ## 사용된 module
 
@@ -24,6 +24,26 @@ sudo npm install -g npm
 ```
 npm install -g  npm
 ```
+
+>**bcrypt-nodejs : 0.0.3**
+
+>**connect-flash : ^0.1.1**
+
+>**debug : ~4.1.1**
+
+>**dotenv : ^8.0.0**
+
+>**express-http2-workaround : ^1.1.3**
+
+>**http-errors : ~1.7.3**
+
+>**passport : ^0.4.0**
+
+>**passport-local : 1.0.0**
+
+>**pug : ^2.0.4**
+
+>**sequelize : ^5.13.0**
 
 >**express : 4.17.1**
 
@@ -49,18 +69,34 @@ Node server.js
 
 >**DB**를 통해 효율적인 data관리 가능
 
- temperature| humidity | gas | fine_dust | gps | date | machine_type | machine_num | order_num
---------|--------|--------|--------|--------|--------|--------|--------|--------
-int | int | boolean | int | varchar(256) | timestamp | int | int | int
+### User 테이블
 
->arduino machine_type : 0
+id | email | nick | password | name | createdAt | updateAt | deletedAt
+--------|--------|--------|--------|--------|--------|--------|--------
+int(primary key) | varchar(40) | varchar(15) | varchar(100) | varchar(20) | datetime | datetime | datetime  
 
->raspberry machine_type : 1
+>email : user 관리 위해 로그인 계정 id
+
+>password : user의 비밀번호 bcrypt 모듈을 이용해 암호화 저장
+
+### Sensor 테이블
+
+id | temperature| humidity | gas | fine_dust | gps | recorddate | machine_type | machine_num | deviceid
+--------|--------|--------|--------|--------|--------|--------|--------|--------|--------
+int(primary key)|int | int | boolean | int | varchar(256) | timestamp | int | int | int
+
+>arduino machine_type(라즈베리 파이) : 0
+
+>raspberry machine_type(아두이노) : 1
 
 >machine_num : 각 기기의 고유번호
 
+>deviceid : 각 사용자 데이터 분리 하기 위한 foreign key user 테이블의 id와 연동
+
 
 ## 제공 api
+
+---------추가예정 수정중----------------------
 
 >**GET**
 
