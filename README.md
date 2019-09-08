@@ -1,5 +1,7 @@
 # **MainNodeServer**
 
+![홈페이지](https://toojs.asuscomm.com/mainpage.gif)
+
 **Node 모듈**을 사용해 **Server**를 구성 후 동작 url형태로 명령 인식 database 작업,login 처리,웹페이지 렌더
 
 ## 사용된 module
