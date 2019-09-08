@@ -6,21 +6,11 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     title FreshO2 Webpage
     link(rel='shortcut icon' href='/images/logo/favicon.ico' type='image/x-icon')
-    // stylesheet
-    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')
-    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')
-    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
-    // JS
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-    script(type='text/javascript' src='/javascripts/bootstrap.min.js')
-    script(type='text/javascript' src='/javascripts/jquery.fittext.js')
-    script(type='text/javascript' src='/javascripts/jquery.lettering.js')
-    script(type='text/javascript' src='/javascripts/jquery.textillate.js')
-    script(type='text/javascript' src='/javascripts/particles.js')
-    script(type='text/javascript' src='/javascripts/app.js')
+    
+
   body
     nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-custom
-      .container
+      .container.nav-font
         a.navbar-brand(href='/')
           img#logo.d-inline-block.mr-1(height='30' width='35' alt='Logo' src='/images/logo/O2_white.png')
           |         FreshO2
@@ -29,6 +19,7 @@ html
         #navbarSupportedContent.collapse.navbar-collapse
           block navmenu
     block content
+  //-
     footer.footer-middle.mt-3
       .container
         .row.mb-5
@@ -60,3 +51,33 @@ html
               script.
                 document.write(new Date().getFullYear());
               |  All rights reserved
+    //
+// stylesheet
+link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
+// JS
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+script(type='text/javascript' src='/javascripts/jquery.fittext.js')
+script(type='text/javascript' src='/javascripts/jquery.lettering.js')
+script(type='text/javascript' src='/javascripts/jquery.textillate.js')
+script(type='text/javascript' src='/javascripts/particles.js')
+script(type='text/javascript' src='/javascripts/app.js')
+
+if !user
+  script(type='text/javascript').
+      $('.texts').textillate({
+      minDisplayTime: 2000,
+      in: {
+      effect: 'flipInX',
+      sync: true
+      },
+      out: {
+      delay: 50,
+      effect: 'rollOut',
+      shuffle: true
+      },
+      loop: true
+      });
+      particleJS();

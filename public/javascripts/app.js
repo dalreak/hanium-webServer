@@ -111,3 +111,23 @@ function particleJS() {
     }
   );
 }
+
+function selectCheckMachineType(sel){
+  var res_b = ["all machine","1","2","3","4","5"];
+  var res_a = ["all machine","1","2","3","4","5"];
+  var res_r = ["all machine","1","2","3"];
+  var target = document.getElementById("machineNum");
+
+  if(sel.value == "b") var res = res_b;
+  else if(sel.value == "a") var res = res_a;
+  else if(sel.value == "r") var res = res_r;
+
+  target.options.length = 0;
+
+  for(x in res){
+    var opt = document.createElement("option");
+    opt.value = res[x];
+    opt.innerHTML = res[x];
+    target.appendChild(opt);
+  }
+}

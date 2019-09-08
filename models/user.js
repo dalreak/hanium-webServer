@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: true,
     },
+    profileimgsrc: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: '/images/profile/default.png',
+    },
   }, {
     timestamps: true,
     paranoid: true,

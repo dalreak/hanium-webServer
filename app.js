@@ -30,6 +30,7 @@ var port = 3000;
 var port2 = 4000;
 
 var indexRouter = require('./routes/index');
+//var dashboardRouter = require('./routes/dashboard');
 var { sequelize } = require('./models');
 var passportConfig = require('./passport');
 var authRouter = require('./routes/auth');
@@ -73,6 +74,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/auth',authRouter);
 app.use('/data',dataRouter);
+//app.use('/dashboard',dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

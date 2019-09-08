@@ -16,6 +16,7 @@ router.post('/node/uploadData/:id', function(req, res, next) {
           deviceid: result.id,
           temperature: req.body.temperature,
           humidity: req.body.humidity,
+          gps: req.body.gps,
           gas: req.body.gas,
           fine_dust: req.body.fine_dust,
           machine_type: req.body.machine_type,
@@ -42,6 +43,10 @@ router.get('/node/getData/:id', function(req, res, next) {
   if(req.query.getSensorData == undefined){
     getSensorData = 30;
   }
+  else{
+    getSensorData = req.query.getSensorData * 1;
+  }
+
   if (req.query.machine_type != undefined){
     if(req.query.machine_num == undefined){
       setWhere.machine_type = req.query.machine_type;
@@ -70,21 +75,4 @@ console.log(err);
       })
 
 });
-
-/*
-router.get('/login', isNotLoggedIn, function(req, res, next) {
-  res.render('login', {
-    title: 'FreshO2',
-    user: req.user
-  });
-});
-
-router.get('/join', isNotLoggedIn, function(req, res, next) {
-  res.render('join', {
-    title: 'FreshO2',
-    user: req.user
-  });
-});
-*/
-
 module.exports = router;
