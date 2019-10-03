@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var http = require('http');
 var https = require('https');
+var spdy = require('spdy');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -35,18 +36,40 @@ var { sequelize } = require('./models');
 var passportConfig = require('./passport');
 var authRouter = require('./routes/auth');
 var dataRouter = require('./routes/data');
+var webSocket = require('./socket/socket.js');
 
+var sessionMiddleware = session({
+  resave: false,
+  saveUninitialized: false,
+  secret: 'secret code',
+  cookie: {
+    httpOnly: true,
+    secure: true,
+    sameSite: true,
+  },
+});
 var app = express();
 sequelize.sync();
 passportConfig(passport);
 
+
 var server2 = http.createServer(app);
+//webSocket(server2);
 server2.listen(port2,() =>{
   console.log(port2 + '포트에서 대기중입니다')
 });
+
+/*
 var server = https.createServer(options, app);
+
 server.listen(port,() =>{
   console.log(port + '포트에서 대기중입니다')
+});
+*/
+
+var spdyServer = spdy.createServer(options,app);
+spdyServer.listen(port,()=>{
+    console.log(port + '포트에서 대기중입니다')
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,15 +80,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cookieParser('secret code'));
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: 'secret code',
-  cookie: {
-    httpOnly: true,
-    secure: true,
-  },
-}));
+app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(passport.initialize());
@@ -75,6 +90,9 @@ app.use('/', indexRouter);
 app.use('/auth',authRouter);
 app.use('/data',dataRouter);
 //app.use('/dashboard',dashboardRouter);
+app.use((req,res,next) => {
+    //req.session.ioId = req.user.id;
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,5 +109,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+//webSocket(server,app,sessionMiddleware);
+webSocket(spdyServer,app,sessionMiddleware);
 module.exports = app;

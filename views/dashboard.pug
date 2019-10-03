@@ -1,4 +1,5 @@
 extends layout
+
 block navmenu
   ul.navbar-nav.ml-auto
     li#menuP.nav-item
@@ -21,38 +22,88 @@ block navmenu
         a.dropdown-item hello
         a.dropdown-item nice
         a.dropdown-item(href="/auth/logout") logout
+
 block content
   .jumbotron
     label(for="machineType") machinetype
       select.form-control#machineType(onchange="selectCheckMachineType(this)")
-        option(selected) Chosse
-        option(value="b") both(arduino & raspberry )
-        option(value="a") arduino
-        option(value="r") raspberry
+        option(selected value="allmachine") Chosse
+        option(value="arduino") arduino
+        option(value="raspberry") raspberry
     label(for="machineNum") machinenum
       select.form-control#machineNum
-  .mt-5.px-5
-    .row
-      .col
-        .row#chart1
-        .row#chart2
-      .col
-        #map
-  script(type='text/javascript' src="/chartModule/highcharts.js")
-  script(type='text/javascript' src="/chartModule/highcharts-more.js")
-  script(type='text/javascript' src="/chartModule/modules/sankey.js")
-  script(type='text/javascript' src="/chartModule/highcharts-3d.js")
-  script(type='text/javascript' src="/chartModule/modules/exporting.js")
-  script(type='text/javascript' src="/chartModule/modules/export-data.js")
-  script(type='text/javascript' src='/javascripts/forChart.js')
-  script(type="text/javascript" src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=2B5FD2E8-215F-3B64-B391-486EBBCC9185")
-  script(type='text/javascript'). 
-    vw.ol3.MapOptions = {
-    basemapType: vw.ol3.BasemapType.GRAPHIC
-      , controlDensity: vw.ol3.DensityType.EMPTY
-      , interactionDensity: vw.ol3.DensityType.BASIC
-      , controlsAutoArrange: true
-      , homePosition: vw.ol3.CameraPosition
-      , initPosition: vw.ol3.CameraPosition
-      } 
-    vmap = new vw.ol3.Map("map",  vw.ol3.MapOptions);
+    button.btn.btn-primary(type="submit" onclick="onClickChangeGraph(document.getElementById(\"machineType\").value,document.getElementById(\"machineNum\").value)") Change
+  .container-fluid#chartPage
+   .row.justify-content-center
+     .col-2.border.bg-light ARDUINO ONE
+       #arduinoNumONE_tem
+       #arduinoNumONE_hum
+       #arduinoNumONE_fine
+       #arduinoNumONE_gas 가스상태 : 정상
+       #arduinoNumONE_recordDate
+     .col-2.border.bg-light ARDUINO TWO
+       #arduinoNumTWO_tem
+       #arduinoNumTWO_hum
+       #arduinoNumTWO_fine
+       #arduinoNumTWO_gas 가스상태 : 정상
+       #arduinoNumTWO_recordDate
+     .col-2.border.bg-light ARDUINO THREE
+       #arduinoNumTHREE_tem
+       #arduinoNumTHREE_hum
+       #arduinoNumTHREE_fine 
+       #arduinoNumTHREE_gas 가스상태 : 정상
+       #arduinoNumTHREE_recordDate
+     .col-2.border.bg-light ARDUINO FOUR
+       #arduinoNumFOUR_tem
+       #arduinoNumFOUR_hum
+       #arduinoNumFOUR_fine
+       #arduinoNumFOUR_gas 가스상태 : 정상
+       #arduinoNumFOUR_recordDate
+     .col-2.border.bg-light ARDUINO FIVE
+       #arduinoNumFIVE_tem 
+       #arduinoNumFIVE_hum
+       #arduinoNumFIVE_fine
+       #arduinoNumFIVE_gas 가스상태 : 정상
+       #arduinoNumFIVE_recordDate         
+   .row.justify-content-center
+     .col-3.border.bg-light RASPBERRYPI ONE
+       #raspberryPiNumONE_tem
+       #raspberryPiNumONE_hum
+       #raspberryPiNumONE_fine
+       #raspberryPiNumONE_gas 가스상태 : 정상
+       #raspberryPiNumONE_recordDate
+     .col-3.border.bg-light RASPBERRYPI TWO
+       #raspberryPiNumTWO_tem
+       #raspberryPiNumTWO_hum
+       #raspberryPiNumTWO_fine
+       #raspberryPiNumTWO_gas 가스상태 : 정상
+       #raspberryPiNumTWO_recordDate
+     .col-3.border.bg-light RASPBERRYPI THREE
+       #raspberryPiNumTHREE_tem
+       #raspberryPiNumTHREE_hum
+       #raspberryPiNumTHREE_fine
+       #raspberryPiNumTHREE_gas 가스상태 : 정상
+       #raspberryPiNumTHREE_recordDate
+    
+block dashboardScript 
+  script.
+        var socket = io.connect('https://toojs.asuscomm.com/dbUpdate?user='+'!{user.id}', {
+              path: '/socket.io',secure: true,
+            });
+            socket.on('news',function (data){
+              updateGraph('!{user.email}',data.machine_type,data.machine_num);
+              socket.emit('reply','check ok');
+            });
+            
+        var socket4Html = io.connect('https://toojs.asuscomm.com/resHtml',{
+            path: '/socket.io',secure: true,
+        });
+        socket4Html.on('htmlDataRes',function(data){
+          $('#chartPage').html(data);
+          
+          socket4Html.emit('reply','update success');
+        });
+        socket4Html.on('vmapKey',function(data){
+          prepareChart(data.key,data.machine_num);
+          socket4Html.emit('reply','key receive success');
+        });

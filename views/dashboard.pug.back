@@ -1,0 +1,75 @@
+extends layout
+block navmenu
+  ul.navbar-nav.ml-auto
+    li#menuP.nav-item
+      a#menu.nav-link(href="/") Home 
+    li.nav-item
+      a.nav-link(href="/about") About
+    li#dashboardP.nav-item.active
+      a#dashboard.nav-link(href="/dashboard") 
+        |Dashboard
+        span.sr-only (current)
+    li.nav-item
+      a.nav-link    
+    li.nav-item.dropdown
+      a#userDropdown.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") 
+        img#userProfileCircle(src=user.profileimgsrc alt="user profile image" width=35 height=35)
+      .dropdown-menu(aria-labelledby="userDropdown")
+        h6.dropdown-header #{user.email}
+        h6.dropdown-header @#{user.nick}
+        .dropdown-divider
+        a.dropdown-item hello
+        a.dropdown-item nice
+        a.dropdown-item(href="/auth/logout") logout
+block content
+  .jumbotron
+    label(for="machineType") machinetype
+      select.form-control#machineType(onchange="selectCheckMachineType(this)")
+        option(selected) Chosse
+        option(value="both") both(arduino & raspberry )
+        option(value="arduino") arduino
+        option(value="raspberry") raspberry
+    label(for="machineNum") machinenum
+      select.form-control#machineNum
+    button.btn.btn-primary(type="submit" onclick="alert(document.getElementById(\"machineType\").value + \"과\" +document.getElementById(\"machineNum\").value +\"버튼을 누르셨습니다.\")") Change
+  .container
+    #d3Chart
+    .row
+      .col-md-6
+        .row#chart3
+        .row#chart4
+      .col-md-6
+        #map
+    script(src='https://toojs.asuscomm.com/socket.io/socket.io.js')
+    script.
+        var socket = io.connect('https://toojs.asuscomm.com/dbUpdate?user='+'!{user.id}', {
+              path: '/socket.io',secure: true,
+            });
+            socket.on('news',function (data){
+              console.log(data.text,data.machine_type,data.machine_num);
+              fn_ajaxJsonp();
+              socket.emit('reply','check ok');
+            });
+
+
+  script(type='text/javascript' src="/chartModule/highcharts.js")
+  script(type='text/javascript' src="/chartModule/highcharts-more.js")
+  script(type='text/javascript' src="/chartModule/modules/sankey.js")
+  script(type='text/javascript' src="/chartModule/highcharts-3d.js")
+  script(type='text/javascript' src="/chartModule/modules/exporting.js")
+  script(type='text/javascript' src="/chartModule/modules/export-data.js")
+  script(type='text/javascript' src='https://d3js.org/d3.v3.js')
+  script(type='text/javascript' src='/javascripts/forChart.js')
+  script(type="text/javascript" src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=2B5FD2E8-215F-3B64-B391-486EBBCC9185")
+  script(type='text/javascript'). 
+    vw.ol3.MapOptions = {
+    basemapType: vw.ol3.BasemapType.GRAPHIC
+      , controlDensity: vw.ol3.DensityType.EMPTY
+      , interactionDensity: vw.ol3.DensityType.BASIC
+      , controlsAutoArrange: true
+      , homePosition: vw.ol3.CameraPosition
+      , initPosition: vw.ol3.CameraPosition
+      } 
+    vmap = new vw.ol3.Map("map",  vw.ol3.MapOptions);
+    
+  

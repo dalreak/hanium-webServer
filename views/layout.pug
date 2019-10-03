@@ -19,54 +19,23 @@ html
         #navbarSupportedContent.collapse.navbar-collapse
           block navmenu
     block content
-  //-
-    footer.footer-middle.mt-3
-      .container
-        .row.mb-5
-          .col-md
-            .ftco-footer-widget.mb-4
-              h2.ftco-heading-2 Team FreshO2
-              p Hanium team work in gitlab and make check fine dust machine etc.... 
-              h5 Team Leader : FreshO
-              h5 Team Members : park guta
-              h5 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;&nbsp;jin ssabbb
-              h5 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;&nbsp;seung mengmeng
-              h5 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;&nbsp;youn tang
-          .col-md
-            .ftco-footer-widget.mb-4
-              h2.ftco-heading-2 Contact Information
-              ul.list-unstyled
-                li
-                  a.py-2.d-block.text-dark(href='#') JeonJu
-                li
-                  a.py-2.d-block.text-dark(href='#') 000
-                li
-                  a.py-2.d-block.text-dark(href='#') 미세먼지 확인 사이트
-                li
-                  a.py-2.d-block.text-dark(href='#') 이메일
-        .row
-          .col-md-12.text-center
-            p
-              | Copyright &copy;
-              script.
-                document.write(new Date().getFullYear());
-              |  All rights reserved
-    //
-// stylesheet
-link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
-link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
-link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
-// JS
-script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-script(type='text/javascript' src='/javascripts/bootstrap.min.js')
-script(type='text/javascript' src='/javascripts/jquery.fittext.js')
-script(type='text/javascript' src='/javascripts/jquery.lettering.js')
-script(type='text/javascript' src='/javascripts/jquery.textillate.js')
-script(type='text/javascript' src='/javascripts/particles.js')
-script(type='text/javascript' src='/javascripts/app.js')
+ 
+case page
+  when 0
+    // stylesheet
+    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
 
-if !user
-  script(type='text/javascript').
+    // JS
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+    script(type='text/javascript' src='/javascripts/jquery.fittext.js')
+    script(type='text/javascript' src='/javascripts/jquery.lettering.js')
+    script(type='text/javascript' src='/javascripts/jquery.textillate.js')
+    script(type='text/javascript' src='/javascripts/particles.js')
+    script(type='text/javascript' src='/javascripts/app.js')
+    script(type='text/javascript').
       $('.texts').textillate({
       minDisplayTime: 2000,
       in: {
@@ -81,3 +50,54 @@ if !user
       loop: true
       });
       particleJS();
+
+  when 1
+    // stylesheet
+    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
+
+    // JS
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+
+  when 2 
+    // stylesheet
+    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
+
+    // JS
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+
+  when 3
+    // stylesheet
+    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
+    link(href='/stylesheets/billboard.css' rel='stylesheet' type='text/css')   
+
+    // JS
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    #vworldScript
+      script(type="text/javascript" src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=2B5FD2E8-215F-3B64-B391-486EBBCC9185")
+    script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+    script(type='text/javascript' src='/d3/d3.min.js')
+    script(type='text/javascript' src='/javascripts/billboard.min.js')
+    #extraModules
+      script(type='text/javascript' src='/javascripts/forChart-main.js')#extraModuleO
+    script(type='text/javascript' src='/javascripts/dashboard.js')
+    script(src='https://toojs.asuscomm.com/socket.io/socket.io.js')
+    
+    block dashboardScript
+
+  default
+    // stylesheet
+    link(href='/stylesheets/bootstrap.min.css' rel='stylesheet' type='text/css')            
+    link(href='/stylesheets/animate.css' rel='stylesheet' type='text/css')
+    link(href='/stylesheets/style.css' rel='stylesheet' type='text/css')    
+
+    // JS
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(type='text/javascript' src='/javascripts/bootstrap.min.js')

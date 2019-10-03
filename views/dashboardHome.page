@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+    <div class="col-2 border bg-light">ARDUINO ONE
+        <div id="arduinoNumONE_tem"></div>
+        <div id="arduinoNumONE_hum"></div>
+        <div id="arduinoNumONE_fine"></div>
+        <div id="arduinoNumONE_gas">가스상태 : 정상</div>
+        <div id="arduinoNumONE_recordDate"></div>
+    </div>
+    <div class="col-2 border bg-light">ARDUINO TWO
+        <div id="arduinoNumTWO_tem"></div>
+        <div id="arduinoNumTWO_hum"></div>
+        <div id="arduinoNumTWO_fine"></div>
+        <div id="arduinoNumTWO_gas">가스상태 : 정상</div>
+        <div id="arduinoNumTWO_recordDate"></div>
+    </div>
+    <div class="col-2 border bg-light">ARDUINO THREE
+        <div id="arduinoNumTHREE_tem"></div>
+        <div id="arduinoNumTHREE_hum"></div>
+        <div id="arduinoNumTHREE_fine"></div>
+        <div id="arduinoNumTHREE_gas">가스상태 : 정상</div>
+        <div id="arduinoNumTHREE_recordDate"></div>
+    </div>
+    <div class="col-2 border bg-light">ARDUINO FOUR
+        <div id="arduinoNumFOUR_tem"></div>
+        <div id="arduinoNumFOUR_hum"></div>
+        <div id="arduinoNumFOUR_fine"></div>
+        <div id="arduinoNumFOUR_gas">가스상태 : 정상</div>
+        <div id="arduinoNumFOUR_recordDate"></div>
+    </div>
+    <div class="col-2 border bg-light">ARDUINO FIVE
+        <div id="arduinoNumFIVE_tem"></div>
+        <div id="arduinoNumFIVE_hum"></div>
+        <div id="arduinoNumFIVE_fine"></div>
+        <div id="arduinoNumFIVE_gas">가스상태 : 정상</div>
+        <div id="arduinoNumFIVE_recordDate"></div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-3 border bg-light">RASPBERRYPI ONE
+        <div id="raspberryPiNumONE_tem"></div>
+        <div id="raspberryPiNumONE_hum"></div>
+        <div id="raspberryPiNumONE_fine"></div>
+        <div id="raspberryPiNumONE_gas">가스상태 : 정상</div>
+        <div id="raspberryPiNumONE_recordDate"></div>
+    </div>
+    <div class="col-3 border bg-light">RASPBERRYPI TWO
+        <div id="raspberryPiNumTWO_tem"></div>
+        <div id="raspberryPiNumTWO_hum"></div>
+        <div id="raspberryPiNumTWO_fine"></div>
+        <div id="raspberryPiNumTWO_gas">가스상태 : 정상</div>
+        <div id="raspberryPiNumTWO_recordDate"></div>
+    </div>
+    <div class="col-3 border bg-light">RASPBERRYPI THREE
+        <div id="raspberryPiNumTHREE_tem"></div>
+        <div id="raspberryPiNumTHREE_hum"></div>
+        <div id="raspberryPiNumTHREE_fine"></div>
+        <div id="raspberryPiNumTHREE_gas">가스상태 : 정상</div>
+        <div id="raspberryPiNumTHREE_recordDate"></div>
+    </div>
+</div>

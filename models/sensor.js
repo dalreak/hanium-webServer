@@ -21,9 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     recorddate: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
       allowNull: false,
-      defaultValue: sequelize.literal('now()'),
     },
     machine_type: {
       type: DataTypes.INTEGER,

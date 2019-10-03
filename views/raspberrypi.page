@@ -1,0 +1,12 @@
+<div class="container border">
+    <div class="col">
+        <div id="chartName"></div>
+    </div>
+    <div class="col">
+        <div id="chartForTemp"></div>
+        <div id="chartForHumi"></div>
+        <div id="chartForFinedust"></div>
+        <div id="charForGas"></div>
+        <div id="mapForRaspberry"></div>
+    </div>
+</div>
