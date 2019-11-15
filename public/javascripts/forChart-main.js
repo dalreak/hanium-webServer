@@ -372,6 +372,7 @@ function initChart() {
         title: {
           text: "온도",
           position: "center",
+          fontsize : 30,
         },
         transition: {
           duration: 700

@@ -14,7 +14,7 @@ var passport = require('passport');
 require('dotenv').config();
 
 var options = {
-  key: fs.readFileSync('cert/domain.key'),
+  key: fs.readFileSync('cert/privkey.pem'),
   cert: fs.readFileSync('cert/fullchain.pem')
 };
 

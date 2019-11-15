@@ -10,6 +10,16 @@ require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
 
 router.post('/node/uploadData/:id', function(req, res, next) {
+  parseGps = null;
+  if(req.body.gps != undefined){
+    temp = req.body.gps.split(",");
+    firstNum = temp[0].substring(0,2) * 1;
+    secondNum = temp[0].substring(2) /60;
+    parseGps = firstNum + secondNum + ",";
+    firstNum = temp[1].substring(0,3) * 1;
+    secondNum = temp[1].substring(3)/60;
+    parseGps += firstNum + secondNum;
+  }
   User.findOne({
       where: {
         email: req.params.id
@@ -20,7 +30,7 @@ router.post('/node/uploadData/:id', function(req, res, next) {
           deviceid: result.id,
           temperature: req.body.temperature,
           humidity: req.body.humidity,
-          gps: req.body.gps,
+          gps: parseGps,
           gas: req.body.gas,
           fine_dust: req.body.fine_dust,
           machine_type: req.body.machine_type,

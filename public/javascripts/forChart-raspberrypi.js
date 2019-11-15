@@ -157,15 +157,24 @@ function initChart(machineNum) {
     });
   document.getElementById("chartName").innerHTML = "RaspberryPi Num : " + machineNum;
 
-
-
+//console.log(newCameraPosion);
+//tempOption = new vw.ol3.CameraPosition();
+//tempOption.zoom = 10;
+//tempOption.center = [35.84631116666667,127.13362183333334];
   vw.ol3.MapOptions = {
     basemapType: vw.ol3.BasemapType.GRAPHIC,
     controlDensity: vw.ol3.DensityType.EMPTY,
     interactionDensity: vw.ol3.DensityType.BASIC,
     controlsAutoArrange: true,
-    homePosition: vw.ol3.CameraPosition,
-    initPosition: vw.ol3.CameraPosition,
+    homePosition: {
+      center :ol.proj.fromLonLat(127.1,35.8),
+    zoom : 3,
+    rotation : 0.5,},
+    initPosition: {
+      center :ol.proj.fromLonLat(127.1,35.8),
+    zoom : 3,
+    rotation : 0.5,},
+    zoom : 16,
   };
 
   vmap = new vw.ol3.Map("mapForRaspberry",  vw.ol3.MapOptions);
@@ -225,7 +234,7 @@ function updateChart(chartName, temp, hum, fine, gas, recorddate,gpsD,machineNum
     finedustData.push(fine);
     gasData.push(gas);
     date.push(new Date(recorddate.substr(0, 19)));
-    gps.push(gpsD)
+    gps.push(gpsD);
 
     chartForTemp.load({
       columns: [
