@@ -1427,7 +1427,7 @@ function initChart() {
           duration: 700
         },
         bindto: "#raspberryPiNumTHREE_fine"
-      });
+      }); 
 
       for (var i = 0; i < 8; i++) {
 

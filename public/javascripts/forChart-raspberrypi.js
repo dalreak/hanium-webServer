@@ -1,3 +1,4 @@
+
 var chartForTemp;
 var chartForHumi;
 var chartForFinedust;
@@ -7,6 +8,7 @@ var mapForRaspberry;
 var vmap;
 var mapController;
 var markerLayer;
+var map;
 
 var tempData = Array();
 var humiData = Array();
@@ -20,13 +22,13 @@ humiData[0] = "습도";
 finedustData[0] = "미세먼지";
 gasData[0] = "유해가스";
 date[0] = "times";
-
+gps[0] = "GPS";
 
 function prepareChart(vmapKey, machine_num) {
 
   var jsFileForVmap = document.createElement('script');
   jsFileForVmap.type = 'text/javascript';
-  jsFileForVmap.src = 'https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=' + vmapKey;
+  jsFileForVmap.src = 'https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js' + vmapKey;
   jsFileForVmap.id = 'extraModule1';
 
   document.getElementById('extraModules').appendChild(jsFileForVmap);
@@ -43,12 +45,12 @@ function initChart(machineNum) {
     function(data) {
       for (var i = 1; i < 31; i++) {
         if (data[i - 1] == undefined) {
-          tempData.splice(i, 30 - i);
-          humiData.splice(i, 30 - i);
-          finedustData.splice(i, 30 - i);
-          gasData.splice(i, 30 - i);
-          date.splice(i, 30 - i);
-          gps.splice(i, 30 - i);
+          tempData.splice(i, 30 - i+1);
+          humiData.splice(i, 30 - i+1);
+          finedustData.splice(i, 30 - i+1);
+          gasData.splice(i, 30 - i+1);
+          date.splice(i, 30 - i+1);
+          gps.splice(i, 30 - i+1);
 
           break;
         }
@@ -157,77 +159,111 @@ function initChart(machineNum) {
     });
   document.getElementById("chartName").innerHTML = "RaspberryPi Num : " + machineNum;
 
-//console.log(newCameraPosion);
-//tempOption = new vw.ol3.CameraPosition();
-//tempOption.zoom = 10;
-//tempOption.center = [35.84631116666667,127.13362183333334];
-  vw.ol3.MapOptions = {
-    basemapType: vw.ol3.BasemapType.GRAPHIC,
-    controlDensity: vw.ol3.DensityType.EMPTY,
-    interactionDensity: vw.ol3.DensityType.BASIC,
-    controlsAutoArrange: true,
-    homePosition: {
-      center :ol.proj.fromLonLat(127.1,35.8),
-    zoom : 3,
-    rotation : 0.5,},
-    initPosition: {
-      center :ol.proj.fromLonLat(127.1,35.8),
-    zoom : 3,
-    rotation : 0.5,},
-    zoom : 16,
-  };
 
-  vmap = new vw.ol3.Map("mapForRaspberry",  vw.ol3.MapOptions);
-   markerLayer = new vw.ol3.layer.Marker(vmap);
-   vmap.addLayer(markerLayer);
+  var initPos = ["127.892509", "36.325328"];
 
-  //  for (var i = 1; i < 31; i++) {
-      //console.log((gps[i].substr(10,3)+"."+gps[i].substr(13,2)) *1 ,(gps[i].substr(1,2)+"."+gps[i].substr(3,2)) *1);
-      //if(gps[i] != undefined){
-      console.log(gps[i]);
-      vw.ol3.markerOption = {
-        x: 126.24,
-        y: 37.4,
-        epsg: "EPSG:4326",
-        title: '테스트마커1',
-        contents: '테스트마커1 본문내용',
-        //iconUrl: 'http://map.vworld.dev/images/ol3/marker_blue.png'
-      };
-      markerLayer.addMarker(vw.ol3.markerOption);
-      vw.ol3.markerOption = {
-    x : 14164292.00853613,
-    y : 4495009.258626321,
-    epsg : "EPSG:900913",
-    title : '테스트마커2',
-    contents : '테스트마커2 본문내용<br>테스트마커2 본문내용',
-    iconUrl : 'http://map.vworld.dev/images/ol3/btn_area.png'
-   };
-   markerLayer.addMarker(vw.ol3.markerOption);
+  for (var i = 1; i < gps.length; i++) {
+    //console.log(gps);
+    if (gps[i] && gps[i].length > 8) {
+      initPos = gps[i].split(",");
+      break;
+    }
+  }
+//console.log(gps);
 
-   vw.ol3.markerOption = {
-    x : 14129709.590359,
-    y : 4442313.7639686,
-    epsg : "EPSG:3857",
-    title : '브이월드로 가자',
-    contents : "<a href='http://map.vworld.dev' target='_blank'>브이월드로 GOGOGO</a><br><br><a href='http://dev.vworld.kr' target='_blank'>개발자센터 GOGOGO</a>"
-   };
-   markerLayer.addMarker(vw.ol3.markerOption);
+  map = new ol.Map({
+    target: 'mapForRaspberry',
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.XYZ({ // 브이월드 WMTS API 호출
+          url: 'https://api.vworld.kr/req/wmts/1.0.0/2B5FD2E8-215F-3B64-B391-486EBBCC9185/Base/{z}/{y}/{x}.png'
+        })
+      })
+    ],
+    //overlays: [overlay],
+    view: new ol.View({ //지도위치 설정
+      center: ol.proj.transform(initPos, 'EPSG:4326', "EPSG:900913"), //위경도 좌표계 변환
+      zoom: 15
+    }),
+    logo: false,
+  });
 
-  //  }
-  //}
+  for (var i = 1; i < gps.length; i++) {
+    //console.log(gps);
+    if (gps[i] && gps[i].length > 8) {
+      var layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              type: 'click',
+              geometry: new ol.geom.Point(ol.proj.fromLonLat(gps[i].split(","))),
+              desc: "온도 : " + tempData[i]+"\n습도 : "+humiData[i]+"\n미세먼지 : "+finedustData[i]+"\n시간 : " + date[i],
+            })
+          ],
+        }),
+        style: [
+          new ol.style.Style({
+            image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+              anchor: [0.5, 46],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'pixels',
+              src: 'https://toojs.asuscomm.com/images/marker.png',
+              scale: 0.08 // 마커 사이즈
+            }))
+          })
+        ],
+      });
+      map.addLayer(layer);
+    }
+  }
+/*
+  var layer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      features: [
+        new ol.Feature({
+          type: 'click',
+          geometry: new ol.geom.Point(ol.proj.fromLonLat(["127.892509", "36.325328"])),
+          desc: "hello\nhello",
+        })
+      ],
+    }),
+    style: [
+      new ol.style.Style({
+        image: new ol.style.Icon( /** @type {olx.style.IconOptions}  ({
+          anchor: [0.5, 46],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          src: 'https://toojs.asuscomm.com/images/marker.png',
+          scale: 0.08 // 마커 사이즈
+        }))
+      })
+    ],
+  });
+  map.addLayer(layer);
+  */
+  map.on('click', function (evt) {
+      var feature = map.forEachFeatureAtPixel(evt.pixel,
+          function (feature) {
+              return feature;
+          });
 
-
+      if (feature) {
+          alert(feature.get('desc'));
+          //content.innerHTML = '<p>You clicked here:</p>' + feature.get('desc');
+          //overlay.setPosition(evt.coordinate);
+      }
+  });
 }
 
-function updateChart(chartName, temp, hum, fine, gas, recorddate,gpsD,machineNum){
-  if(document.getElementById("machineNum").value == machineNum){
+function updateChart(chartName, temp, hum, fine, gas, recorddate, gpsD, machineNum) {
+  if (document.getElementById("machineNum").value == machineNum) {
 
-    tempData.splice(1,1);
-    humiData.splice(1,1);
-    finedustData.splice(1,1);
-    gasData.splice(1,1);
-    date.splice(1,1);
-    gps.splice(1,1);
+    tempData.splice(1, 1);
+    humiData.splice(1, 1);
+    finedustData.splice(1, 1);
+    gasData.splice(1, 1);
+    date.splice(1, 1);
+    gps.splice(1, 1);
 
     tempData.push(temp);
     humiData.push(hum);
@@ -239,27 +275,53 @@ function updateChart(chartName, temp, hum, fine, gas, recorddate,gpsD,machineNum
     chartForTemp.load({
       columns: [
         date,
-       tempData
+        tempData
       ]
     });
     chartForHumi.load({
       columns: [
-          date,
-       humiData
+        date,
+        humiData
       ]
     });
     chartForFinedust.load({
       columns: [
-          date,
-       finedustData
+        date,
+        finedustData
       ]
     });
-     charForGas.load({
+    charForGas.load({
       columns: [
-          date,
-       gasData
+        date,
+        gasData
       ]
     });
+    if (gps[gps.length -1] && gps[gps.length -1].length > 8) {
+      var layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              type: 'click',
+              geometry: new ol.geom.Point(ol.proj.fromLonLat(gps[gps.length -1].split(","))),
+              desc: "온도 : " + tempData[tempData.length -1]+"\n습도 : "+humiData[humiData.length -1]+"\n미세먼지 : "+finedustData[finedustData.length -1]+"\n시간 : " + date[date.length -1],
+            })
+          ],
+        }),
+        style: [
+          new ol.style.Style({
+            image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+              anchor: [0.5, 46],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'pixels',
+              src: 'https://toojs.asuscomm.com/images/marker.png',
+              scale: 0.08 // 마커 사이즈
+            }))
+          })
+        ],
+      });
+      map.addLayer(layer);
+    }
+
   }
 
 }

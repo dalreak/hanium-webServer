@@ -11,14 +11,14 @@ moment.tz.setDefault('Asia/Seoul');
 
 router.post('/node/uploadData/:id', function(req, res, next) {
   parseGps = null;
-  if(req.body.gps != undefined){
+  if(req.body.gps != undefined && req.body.gps.length > 5){
     temp = req.body.gps.split(",");
-    firstNum = temp[0].substring(0,2) * 1;
-    secondNum = temp[0].substring(2) /60;
+    firstNum = temp[0].substring(0,3) * 1;
+    secondNum = temp[0].substring(3) /60;
     parseGps = firstNum + secondNum + ",";
-    firstNum = temp[1].substring(0,3) * 1;
-    secondNum = temp[1].substring(3)/60;
-    parseGps += firstNum + secondNum;
+    firstNum = temp[1].substring(0,2) * 1;
+    secondNum = temp[1].substring(2)/60;
+    parseGps += firstNum + secondNum ;
   }
   User.findOne({
       where: {

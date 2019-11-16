@@ -81,10 +81,15 @@ case page
     // JS
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     #vworldScript
-      script(type="text/javascript" src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=2B5FD2E8-215F-3B64-B391-486EBBCC9185")
+      <!-- openlayers JS, CSS  -->
+      <script src="/javascripts/ol/build/ol.js" type="text/javascript"></script>
+      <link rel="stylesheet" href="/javascripts/ol/css/ol.css" type="text/css">
+      <!-- 좌표계 변환지원 JS  -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
     script(type='text/javascript' src='/javascripts/bootstrap.min.js')
     script(type='text/javascript' src='/d3/d3.min.js')
     script(type='text/javascript' src='/javascripts/billboard.min.js')
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js')
     #extraModules
       script(type='text/javascript' src='/javascripts/forChart-main.js')#extraModuleO
     script(type='text/javascript' src='/javascripts/dashboard.js')

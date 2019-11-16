@@ -7,6 +7,10 @@
         <div id="chartForHumi"></div>
         <div id="chartForFinedust"></div>
         <div id="charForGas"></div>
-        <div id="mapForRaspberry"></div>
+        <div id="mapForRaspberry" style="width: 100%; height:500px; margin-top: 50px; margin-bottom: 100px;"></div>
+        <div id="popup" class="ol-popup">
+          <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+          <div id="popup-content"></div>
+        </div>
     </div>
 </div>
